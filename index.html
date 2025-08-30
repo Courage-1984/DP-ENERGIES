@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>DP ENERGIES - Gas & Energy Solutions</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="assets/images/favicon_io/site.webmanifest">
+    <link rel="shortcut icon" href="assets/images/favicon_io/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dp-navy': '#0C2D48',
+                        'dp-orange': '#FF6A13',
+                        'dp-yellow-orange': '#FFB347',
+                        'dp-light-gray': '#F5F6FA',
+                        'dp-charcoal': '#273043'
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'serif'],
+                        'body': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Mobile-specific improvements */
+        @media (max-width: 640px) {
+
+            /* Improve touch targets */
+            button,
+            a {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            /* Better text readability on mobile */
+            body {
+                -webkit-text-size-adjust: 100%;
+                -ms-text-size-adjust: 100%;
+            }
+
+            /* Prevent horizontal scroll */
+            html,
+            body {
+                overflow-x: hidden;
+            }
+        }
+
+        /* Smooth scrolling for all devices */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Better focus states for accessibility */
+        button:focus,
+        a:focus {
+            outline: 2px solid #FF6A13;
+            outline-offset: 2px;
+        }
+
+        /* Scroll to Top Button Responsive Design */
+        #scroll-to-top {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        @media (max-width: 640px) {
+            #scroll-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 3rem;
+                height: 3rem;
+            }
+        }
+
+        @media (min-width: 641px) and (max-width: 1024px) {
+            #scroll-to-top {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 3.5rem;
+                height: 3.5rem;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            #scroll-to-top {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 3rem;
+                height: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-dp-light-gray font-body">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img src="assets/images/favicon_io/logo.png" alt="DP ENERGIES Logo"
+                            class="w-8 h-10 sm:w-10 sm:h-12 mr-2 sm:mr-3 object-contain">
+                        <span class="text-dp-navy font-bold text-lg sm:text-xl font-display">DP ENERGIES</span>
+                    </div>
+                </div>
+                <div class="hidden lg:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home"
+                            class="nav-link text-dp-navy hover:text-dp-orange px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#about"
+                            class="nav-link text-dp-charcoal hover:text-dp-orange px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        <a href="#services"
+                            class="nav-link text-dp-charcoal hover:text-dp-orange px-3 py-2 rounded-md text-sm font-medium transition-colors">Services</a>
+                        <a href="#projects"
+                            class="nav-link text-dp-charcoal hover:text-dp-orange px-3 py-2 rounded-md text-sm font-medium transition-colors">Projects</a>
+                        <a href="#testimonials"
+                            class="nav-link text-dp-charcoal hover:text-dp-orange px-3 py-2 rounded-md text-sm font-medium transition-colors">Reviews</a>
+                        <a href="#contact"
+                            class="nav-link text-dp-charcoal hover:text-dp-orange px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                <div class="lg:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-dp-orange p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="block px-3 py-3 text-dp-navy font-medium text-base">Home</a>
+                <a href="#about" class="block px-3 py-3 text-dp-charcoal hover:text-dp-orange text-base">About</a>
+                <a href="#services" class="block px-3 py-3 text-dp-charcoal hover:text-dp-orange text-base">Services</a>
+                <a href="#projects" class="block px-3 py-3 text-dp-charcoal hover:text-dp-orange text-base">Projects</a>
+                <a href="#testimonials"
+                    class="block px-3 py-3 text-dp-charcoal hover:text-dp-orange text-base">Reviews</a>
+                <a href="#contact" class="block px-3 py-3 text-dp-charcoal hover:text-dp-orange text-base">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-16 bg-gradient-to-br from-dp-navy to-dp-charcoal text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 font-display">Professional Gas &
+                        Energy Solutions
+                    </h1>
+                    <p class="text-lg sm:text-xl mb-6 sm:mb-8 text-blue-100">Over 25 years of combined experience in
+                        LPG, Natural Gas, and
+                        Industrial Gas installations. Qualified, registered, and committed to safety.</p>
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                        <button onclick="scrollToSection('contact')"
+                            class="bg-dp-orange hover:bg-dp-yellow-orange text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg transition-colors">
+                            <i class="fas fa-calendar-check mr-2"></i>Book Free Inspection
+                        </button>
+                        <button onclick="scrollToSection('services')"
+                            class="border-2 border-white text-white hover:bg-white hover:text-dp-navy px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg transition-colors">
+                            View Services
+                        </button>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8">
+                        <div class="grid grid-cols-2 gap-4 sm:gap-6">
+                            <div class="text-center">
+                                <div class="text-2xl sm:text-3xl font-bold text-dp-yellow-orange">25+</div>
+                                <div class="text-xs sm:text-sm">Years Experience</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl sm:text-3xl font-bold text-dp-yellow-orange">100%</div>
+                                <div class="text-xs sm:text-sm">Compliance</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl sm:text-3xl font-bold text-dp-yellow-orange">24/7</div>
+                                <div class="text-xs sm:text-sm">Emergency Support</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl sm:text-3xl font-bold text-dp-yellow-orange">500+</div>
+                                <div class="text-xs sm:text-sm">Projects Completed</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Signals -->
+    <section class="bg-white py-8 sm:py-12 border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center">
+                <div class="flex items-center justify-center">
+                    <i class="fas fa-certificate text-dp-orange text-2xl mr-3"></i>
+                    <span class="font-semibold text-dp-charcoal">Registered Gas Practitioners</span>
+                </div>
+                <div class="flex items-center justify-center">
+                    <i class="fas fa-shield-alt text-dp-orange text-2xl mr-3"></i>
+                    <span class="font-semibold text-dp-charcoal">Fully Insured & Compliant</span>
+                </div>
+                <div class="flex items-center justify-center">
+                    <i class="fas fa-tools text-dp-orange text-2xl mr-3"></i>
+                    <span class="font-semibold text-dp-charcoal">Installation & Maintenance</span>
+                </div>
+                <div class="flex items-center justify-center">
+                    <i class="fas fa-phone text-dp-orange text-2xl mr-3"></i>
+                    <span class="font-semibold text-dp-charcoal">24/7 Emergency Service</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-12 sm:py-16 lg:py-20 bg-dp-light-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-dp-navy mb-4 font-display">About DP ENERGIES</h2>
+                <p class="text-lg sm:text-xl text-dp-charcoal max-w-3xl mx-auto">Your trusted partner for complete gas
+                    and energy
+                    solutions, built on safety, reliability, and over 25 years of combined industry experience.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+                <div>
+                    <h3 class="text-2xl font-bold text-dp-navy mb-6 font-display">Our Story & Values</h3>
+                    <p class="text-dp-charcoal mb-6">At DP ENERGIES, we bring over 25 years of combined experience in
+                        the gas and energy industry, offering expert solutions for domestic, commercial, and industrial
+                        applications. Our team of qualified and registered gas practitioners is dedicated to delivering
+                        high-quality workmanship, safe installations, and full compliance with all regulations.</p>
+
+                    <p class="text-dp-charcoal mb-6">We specialize in LPG and Natural Gas installations, system
+                        maintenance, and gas leak detection across a wide range of environments — from single homes to
+                        commercial kitchens, housing developments, factories, and more.</p>
+
+                    <p class="text-dp-charcoal mb-6">We also provide services for industrial gases including Nitrogen,
+                        CO₂, and Argon, supporting industries such as manufacturing, powder coating, and food
+                        production.</p>
+
+                    <p class="text-dp-charcoal mb-6">At DP ENERGIES, we understand the importance of keeping your
+                        systems running safely and efficiently. That's why we offer comprehensive maintenance services
+                        to prevent downtime, ensure compliance, and extend the life of your gas infrastructure.</p>
+
+                    <p class="text-dp-charcoal mb-6">DP ENERGIES is your trusted partner for complete gas and energy
+                        solutions, including ongoing maintenance, emergency support, and compliance services. Whether
+                        you're planning a new build or maintaining existing infrastructure, we deliver solutions built
+                        on safety, reliability, and experience.</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-dp-orange mr-3"></i>
+                            <span class="text-dp-charcoal text-sm sm:text-base">Safety First Approach</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-dp-orange mr-3"></i>
+                            <span class="text-dp-charcoal text-sm sm:text-base">Full Compliance</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-dp-orange mr-3"></i>
+                            <span class="text-dp-charcoal text-sm sm:text-base">Quality Workmanship</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-dp-orange mr-3"></i>
+                            <span class="text-dp-charcoal text-sm sm:text-base">Client-Centered Service</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-lg">
+                    <h4 class="text-xl font-bold text-dp-navy mb-6 font-display">Why Choose DP ENERGIES?</h4>
+                    <div class="space-y-3 sm:space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-star text-dp-orange mt-1 mr-3"></i>
+                            <span class="text-dp-charcoal">Over 25 Years of Combined Industry Experience</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-star text-dp-orange mt-1 mr-3"></i>
+                            <span class="text-dp-charcoal">Qualified & Registered Gas Practitioners</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-star text-dp-orange mt-1 mr-3"></i>
+                            <span class="text-dp-charcoal">Installation, Detection & Full Maintenance Services</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-star text-dp-orange mt-1 mr-3"></i>
+                            <span class="text-dp-charcoal">Domestic, Commercial & Industrial Expertise</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-star text-dp-orange mt-1 mr-3"></i>
+                            <span class="text-dp-charcoal">Focused on Safety, Compliance & Long-Term Reliability</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-star text-dp-orange mt-1 mr-3"></i>
+                            <span class="text-dp-charcoal">Professional, Transparent & Client-Centered Service</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-12 sm:py-16 lg:py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-dp-navy mb-4 font-display">Our Services</h2>
+                <p class="text-lg sm:text-xl text-dp-charcoal">Comprehensive gas and energy solutions for residential,
+                    commercial,
+                    and industrial applications</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="bg-dp-light-gray rounded-xl p-6 sm:p-8 hover:shadow-lg transition-shadow">
+                    <div
+                        class="w-12 h-12 sm:w-16 sm:h-16 bg-dp-navy rounded-lg flex items-center justify-center mb-4 sm:mb-6">
+                        <i class="fas fa-fire text-white text-xl sm:text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-dp-navy mb-3 sm:mb-4 font-display">LPG & Natural Gas
+                        Installations</h3>
+                    <p class="text-dp-charcoal mb-3 sm:mb-4 text-sm sm:text-base">Residential, Commercial, and
+                        Industrial</p>
+                    <ul class="text-xs sm:text-sm text-dp-charcoal space-y-1 sm:space-y-2">
+                        <li>• Residential gas connections</li>
+                        <li>• Commercial kitchen systems</li>
+                        <li>• Industrial gas networks</li>
+                        <li>• System upgrades & conversions</li>
+                    </ul>
+                </div>
+
+                <div class="bg-dp-light-gray rounded-xl p-8 hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-dp-orange rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-search text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dp-navy mb-4 font-display">Gas Leak Detection</h3>
+                    <p class="text-dp-charcoal mb-4">Accurate, safe detection for homes, commercial, and industrial
+                        sites</p>
+                    <ul class="text-sm text-dp-charcoal space-y-2">
+                        <li>• Electronic leak detection</li>
+                        <li>• Pressure testing</li>
+                        <li>• Emergency leak response</li>
+                        <li>• Safety inspections</li>
+                    </ul>
+                </div>
+
+                <div class="bg-dp-light-gray rounded-xl p-8 hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-dp-navy rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-wrench text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dp-navy mb-4 font-display">Gas System Maintenance</h3>
+                    <p class="text-dp-charcoal mb-4">Preventative and reactive maintenance for all gas systems</p>
+                    <ul class="text-sm text-dp-charcoal space-y-2">
+                        <li>• Scheduled maintenance programs</li>
+                        <li>• Emergency repairs</li>
+                        <li>• System optimization</li>
+                        <li>• Component replacement</li>
+                    </ul>
+                </div>
+
+                <div class="bg-dp-light-gray rounded-xl p-8 hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-dp-orange rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-certificate text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dp-navy mb-4 font-display">Certificates of Compliance (COCs)</h3>
+                    <p class="text-dp-charcoal mb-4">Issued after thorough inspection and testing</p>
+                    <ul class="text-sm text-dp-charcoal space-y-2">
+                        <li>• Installation certificates</li>
+                        <li>• Safety compliance testing</li>
+                        <li>• Regulatory documentation</li>
+                        <li>• Inspection reports</li>
+                    </ul>
+                </div>
+
+                <div class="bg-dp-light-gray rounded-xl p-8 hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-dp-navy rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-industry text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dp-navy mb-4 font-display">Industrial Gas Installations &
+                        Maintenance</h3>
+                    <p class="text-dp-charcoal mb-4">Nitrogen, CO₂, Argon systems for various applications</p>
+                    <ul class="text-sm text-dp-charcoal space-y-2">
+                        <li>• Manufacturing gas systems</li>
+                        <li>• Powder coating applications</li>
+                        <li>• Food production gases</li>
+                        <li>• Custom industrial solutions</li>
+                    </ul>
+                </div>
+
+                <div class="bg-dp-light-gray rounded-xl p-8 hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-dp-orange rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-project-diagram text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dp-navy mb-4 font-display">Custom Projects & Developments</h3>
+                    <p class="text-dp-charcoal mb-4">From single homes to large-scale industrial plants</p>
+                    <ul class="text-sm text-dp-charcoal space-y-2">
+                        <li>• Custom gas system design</li>
+                        <li>• Large-scale developments</li>
+                        <li>• Specialized installations</li>
+                        <li>• Project management</li>
+                    </ul>
+                </div>
+
+                <div class="bg-dp-light-gray rounded-xl p-8 hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-dp-navy rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-bolt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dp-navy mb-4 font-display">Basic Electrical Work</h3>
+                    <p class="text-dp-charcoal mb-4">Supporting your gas systems with compliant electrical connections
+                    </p>
+                    <ul class="text-sm text-dp-charcoal space-y-2">
+                        <li>• Gas appliance connections</li>
+                        <li>• Control system wiring</li>
+                        <li>• Safety system integration</li>
+                        <li>• Compliance electrical work</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-dp-light-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-dp-navy mb-4 font-display">Our Projects</h2>
+                <p class="text-xl text-dp-charcoal">Showcasing our expertise across residential, commercial, and
+                    industrial installations</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-br from-dp-navy to-dp-charcoal flex items-center justify-center">
+                        <i class="fas fa-home text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dp-navy mb-2 font-display">Residential Gas Installations</h3>
+                        <p class="text-dp-charcoal mb-4">Complete LPG and natural gas installations for single homes and
+                            housing developments with full COC certification.</p>
+                        <div class="flex items-center text-dp-orange">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            <span class="text-sm font-medium">150+ Homes Completed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <div
+                        class="h-48 bg-gradient-to-br from-dp-orange to-dp-yellow-orange flex items-center justify-center">
+                        <i class="fas fa-utensils text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dp-navy mb-2 font-display">Commercial Kitchen Systems</h3>
+                        <p class="text-dp-charcoal mb-4">Professional gas installations for restaurants, hotels, and
+                            commercial kitchens with safety compliance.</p>
+                        <div class="flex items-center text-dp-orange">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            <span class="text-sm font-medium">50+ Commercial Projects</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-br from-dp-navy to-dp-charcoal flex items-center justify-center">
+                        <i class="fas fa-industry text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dp-navy mb-2 font-display">Industrial Gas Networks</h3>
+                        <p class="text-dp-charcoal mb-4">Large-scale industrial gas installations including Nitrogen,
+                            CO₂, and Argon systems for manufacturing.</p>
+                        <div class="flex items-center text-dp-orange">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            <span class="text-sm font-medium">25+ Industrial Plants</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <div
+                        class="h-48 bg-gradient-to-br from-dp-orange to-dp-yellow-orange flex items-center justify-center">
+                        <i class="fas fa-spray-can text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dp-navy mb-2 font-display">Powder Coating Facilities</h3>
+                        <p class="text-dp-charcoal mb-4">Specialized gas systems for powder coating operations with
+                            precise pressure control and safety systems.</p>
+                        <div class="flex items-center text-dp-orange">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            <span class="text-sm font-medium">15+ Coating Plants</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-br from-dp-navy to-dp-charcoal flex items-center justify-center">
+                        <i class="fas fa-seedling text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dp-navy mb-2 font-display">Food Production Systems</h3>
+                        <p class="text-dp-charcoal mb-4">CO₂ and Nitrogen systems for food processing, packaging, and
+                            preservation with food-grade compliance.</p>
+                        <div class="flex items-center text-dp-orange">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            <span class="text-sm font-medium">20+ Food Facilities</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <div
+                        class="h-48 bg-gradient-to-br from-dp-orange to-dp-yellow-orange flex items-center justify-center">
+                        <i class="fas fa-tools text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dp-navy mb-2 font-display">Emergency Repairs & Maintenance
+                        </h3>
+                        <p class="text-dp-charcoal mb-4">24/7 emergency response and comprehensive maintenance programs
+                            to keep systems running safely.</p>
+                        <div class="flex items-center text-dp-orange">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            <span class="text-sm font-medium">500+ Service Calls</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-dp-navy mb-4 font-display">What Our Clients Say</h2>
+                <p class="text-xl text-dp-charcoal">Trusted by homeowners, businesses, and industries across the region
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-dp-light-gray rounded-xl p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-dp-orange">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-dp-charcoal mb-6">"DP ENERGIES installed our complete gas system for our new
+                        restaurant. Professional, efficient, and everything passed inspection first time. Highly
+                        recommended!"</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-dp-navy rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">MR</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-dp-navy">Mike Roberts</div>
+                            <div class="text-sm text-dp-charcoal">Restaurant Owner</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-dp-light-gray rounded-xl p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-dp-orange">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-dp-charcoal mb-6">"Excellent service for our industrial gas installation. The team
+                        was knowledgeable, safety-focused, and completed the project on time and within budget."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-dp-orange rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">SJ</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-dp-navy">Sarah Johnson</div>
+                            <div class="text-sm text-dp-charcoal">Manufacturing Manager</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-dp-light-gray rounded-xl p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-dp-orange">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-dp-charcoal mb-6">"Fast response for our gas leak emergency. Professional diagnosis
+                        and repair with full documentation. Great peace of mind knowing our family is safe."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-dp-navy rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">DM</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-dp-navy">David Miller</div>
+                            <div class="text-sm text-dp-charcoal">Homeowner</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COC Information Section -->
+    <section class="py-20 bg-dp-navy text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl font-bold mb-6 font-display">Certificate of Compliance (COC)</h2>
+                    <p class="text-xl text-blue-100 mb-6">Understanding your gas system compliance requirements and how
+                        we ensure your safety.</p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle text-dp-orange mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-semibold mb-2">What is a COC?</h4>
+                                <p class="text-blue-100">A Certificate of Compliance is a legal document confirming that
+                                    your gas installation meets all safety standards and regulations.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle text-dp-orange mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-semibold mb-2">When Do You Need One?</h4>
+                                <p class="text-blue-100">Required for new installations, major modifications, property
+                                    sales, and insurance claims. Essential for legal compliance.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle text-dp-orange mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-semibold mb-2">Our COC Process</h4>
+                                <p class="text-blue-100">Thorough inspection, pressure testing, safety verification, and
+                                    official documentation by registered gas practitioners.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-6 font-display">COC Services Include:</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-clipboard-check text-dp-orange mr-3"></i>
+                            <span>Complete system inspection</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-gauge text-dp-orange mr-3"></i>
+                            <span>Pressure testing & leak detection</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-file-alt text-dp-orange mr-3"></i>
+                            <span>Official compliance documentation</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-shield-alt text-dp-orange mr-3"></i>
+                            <span>Safety verification & recommendations</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock text-dp-orange mr-3"></i>
+                            <span>Fast turnaround times</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-dp-orange mr-3"></i>
+                            <span>Ongoing support & advice</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-dp-light-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-dp-navy mb-4 font-display">Get In Touch</h2>
+                <p class="text-xl text-dp-charcoal">Ready to discuss your gas and energy needs? Contact us for a free
+                    consultation.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold text-dp-navy mb-6 font-display">Contact Information</h3>
+
+                    <div class="space-y-6">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-dp-navy rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-phone text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-dp-navy">Phone</div>
+                                <a href="tel:+27123456789" class="text-dp-orange hover:text-dp-navy">+27 12 345 6789</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-dp-orange rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-dp-navy">Email</div>
+                                <a href="mailto:info@dpenergies.co.za"
+                                    class="text-dp-orange hover:text-dp-navy">info@dpenergies.co.za</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-dp-navy rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-clock text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-dp-navy">Business Hours</div>
+                                <div class="text-dp-charcoal">Mon-Fri: 7:00 AM - 5:00 PM</div>
+                                <div class="text-dp-charcoal">24/7 Emergency Service</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-dp-orange rounded-lg flex items-center justify-center mr-4">
+                                <i class="fab fa-whatsapp text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-dp-navy">WhatsApp</div>
+                                <a href="https://wa.me/27123456789" class="text-dp-orange hover:text-dp-navy">Chat with
+                                    us instantly</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 p-6 bg-white rounded-xl shadow-lg">
+                        <h4 class="font-bold text-dp-navy mb-4 font-display">Emergency Service Available</h4>
+                        <p class="text-dp-charcoal mb-4">Gas emergencies can't wait. We provide 24/7 emergency response
+                            for gas leaks, system failures, and urgent repairs.</p>
+                        <button onclick="window.open('tel:+27123456789')"
+                            class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>Emergency Hotline
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h3 class="text-2xl font-bold text-dp-navy mb-6 font-display">Request a Quote</h3>
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-dp-charcoal mb-2">First Name</label>
+                                <input type="text" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dp-navy focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-dp-charcoal mb-2">Last Name</label>
+                                <input type="text" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dp-navy focus:border-transparent">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-dp-charcoal mb-2">Email</label>
+                            <input type="email" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dp-navy focus:border-transparent">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-dp-charcoal mb-2">Phone</label>
+                            <input type="tel" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dp-navy focus:border-transparent">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-dp-charcoal mb-2">Service Required</label>
+                            <select required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dp-navy focus:border-transparent">
+                                <option value="">Select a service</option>
+                                <option value="installation">Gas Installation</option>
+                                <option value="maintenance">System Maintenance</option>
+                                <option value="leak-detection">Leak Detection</option>
+                                <option value="coc">Certificate of Compliance</option>
+                                <option value="industrial">Industrial Gas Systems</option>
+                                <option value="emergency">Emergency Service</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-dp-charcoal mb-2">Message</label>
+                            <textarea rows="4" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dp-navy focus:border-transparent"
+                                placeholder="Please describe your requirements..."></textarea>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-dp-orange hover:bg-dp-yellow-orange text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors">
+                            <i class="fas fa-paper-plane mr-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dp-charcoal text-white py-8 sm:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="assets/images/favicon_io/logo.png" alt="DP ENERGIES Logo"
+                            class="w-8 h-10 sm:w-10 sm:h-12 mr-2 sm:mr-3 object-contain">
+                        <span class="text-white font-bold text-lg sm:text-xl font-display">DP ENERGIES</span>
+                    </div>
+                    <p class="text-blue-200 mb-4">SAFE. CERTIFIED. RELIABLE. Professional gas and energy solutions with
+                        over 25 years of combined
+                        experience. Your safety is our priority.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-blue-200 hover:text-dp-orange transition-colors">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-blue-200 hover:text-dp-orange transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-blue-200 hover:text-dp-orange transition-colors">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Services</h4>
+                    <ul class="space-y-2 text-blue-200">
+                        <li><a href="#services" class="hover:text-dp-orange transition-colors">Gas Installations</a>
+                        </li>
+                        <li><a href="#services" class="hover:text-dp-orange transition-colors">Leak Detection</a></li>
+                        <li><a href="#services" class="hover:text-dp-orange transition-colors">System Maintenance</a>
+                        </li>
+                        <li><a href="#services" class="hover:text-dp-orange transition-colors">COC Certificates</a></li>
+                        <li><a href="#services" class="hover:text-dp-orange transition-colors">Industrial Gas</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Industries</h4>
+                    <ul class="space-y-2 text-blue-200">
+                        <li>Residential</li>
+                        <li>Commercial Kitchens</li>
+                        <li>Manufacturing</li>
+                        <li>Powder Coating</li>
+                        <li>Food Production</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Contact</h4>
+                    <ul class="space-y-2 text-blue-200">
+                        <li><i class="fas fa-phone mr-2"></i>+27 12 345 6789</li>
+                        <li><i class="fas fa-envelope mr-2"></i>info@dpenergies.co.za</li>
+                        <li><i class="fas fa-clock mr-2"></i>24/7 Emergency Service</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-blue-800 mt-8 pt-8 text-center text-blue-200">
+                <p>&copy; 2024 DP ENERGIES. All rights reserved. | SAFE. CERTIFIED. RELIABLE.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top"
+        class="fixed bottom-6 right-6 bg-dp-orange hover:bg-dp-yellow-orange text-white w-12 h-12 rounded-full shadow-lg transition-all duration-300 opacity-0 invisible z-50 flex items-center justify-center">
+        <i class="fas fa-chevron-up text-lg"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle with touch support
+        document.getElementById('mobile-menu-btn').addEventListener('click', function (e) {
+            e.preventDefault();
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function (e) {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+
+            if (!mobileMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Smooth scrolling for navigation links with mobile optimization
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            const navHeight = window.innerWidth < 1024 ? 64 : 64; // Adjust for mobile
+            const elementPosition = element.offsetTop - navHeight - 20; // Add extra padding
+
+            window.scrollTo({
+                top: elementPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        // Add click handlers to navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('href').substring(1);
+                scrollToSection(sectionId);
+
+                // Close mobile menu if open
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Update active navigation link on scroll
+        window.addEventListener('scroll', function () {
+            const sections = ['home', 'about', 'services', 'projects', 'testimonials', 'contact'];
+            const navHeight = 64;
+
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                const navLink = document.querySelector(`a[href="#${sectionId}"]`);
+
+                if (section && navLink) {
+                    const sectionTop = section.offsetTop - navHeight - 100;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+
+                    if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                        // Remove active class from all nav links
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.remove('text-dp-navy');
+                            link.classList.add('text-dp-charcoal');
+                        });
+
+                        // Add active class to current nav link
+                        navLink.classList.remove('text-dp-charcoal');
+                        navLink.classList.add('text-dp-navy');
+                    }
+                }
+            });
+        });
+
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(this);
+            const formObject = {};
+            formData.forEach((value, key) => {
+                formObject[key] = value;
+            });
+
+            // Show success message
+            alert('Thank you for your message! We will contact you within 24 hours to discuss your gas and energy needs.');
+
+            // Reset form
+            this.reset();
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('section > div').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Scroll to Top Button Functionality
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+
+        // Show/hide button based on scroll position
+        window.addEventListener('scroll', function () {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.remove('opacity-0', 'invisible');
+                scrollToTopBtn.classList.add('opacity-100', 'visible');
+            } else {
+                scrollToTopBtn.classList.add('opacity-0', 'invisible');
+                scrollToTopBtn.classList.remove('opacity-100', 'visible');
+            }
+        });
+
+        // Smooth scroll to top when button is clicked
+        scrollToTopBtn.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Add touch support for mobile devices
+        scrollToTopBtn.addEventListener('touchstart', function (e) {
+            e.preventDefault();
+            this.style.transform = 'scale(0.95)';
+        });
+
+        scrollToTopBtn.addEventListener('touchend', function (e) {
+            e.preventDefault();
+            this.style.transform = 'scale(1)';
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'976d8a4e45640de1',t:'MTc1NjQ4NjE1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>

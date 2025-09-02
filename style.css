@@ -1,0 +1,66 @@
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+
+    /* Improve touch targets */
+    button,
+    a {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    /* Better text readability on mobile */
+    body {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+    }
+    /* Prevent horizontal scroll */
+    html,
+    body {
+        overflow-x: hidden;
+    }
+}
+
+/* Smooth scrolling for all devices */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Better focus states for accessibility */
+button:focus,
+a:focus {
+    outline: 2px solid #FF6A13;
+    outline-offset: 2px;
+}
+
+/* Scroll to Top Button Responsive Design */
+#scroll-to-top {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+@media (max-width: 640px) {
+    #scroll-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+    #scroll-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+}
+
+@media (min-width: 1025px) {
+    #scroll-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 3rem;
+        height: 3rem;
+    }
+}
+

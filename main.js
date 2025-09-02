@@ -67,23 +67,171 @@ window.addEventListener('scroll', function () {
     });
 });
 
-// Contact form submission
+// Contact form submission with Formspree
 document.getElementById('contact-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
+    // Get the submit button and show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+    submitBtn.disabled = true;
+
     // Get form data
     const formData = new FormData(this);
-    const formObject = {};
-    formData.forEach((value, key) => {
-        formObject[key] = value;
-    });
 
-    // Show success message
-    alert('Thank you for your message! We will contact you within 24 hours to discuss your gas and energy needs.');
+    // Send to Formspree
+    fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                // Success
+                showNotification('Thank you for your message! We will contact you within 24 hours to discuss your gas and energy needs.', 'success');
 
-    // Reset form
-    this.reset();
+                // Clear form fields
+                this.reset();
+
+                // Reset any custom styling or validation states
+                this.querySelectorAll('.border-red-500').forEach(field => {
+                    field.classList.remove('border-red-500');
+                    field.classList.add('border-gray-300');
+                });
+
+                // Remove any error messages
+                this.querySelectorAll('.error-message').forEach(msg => msg.remove());
+
+            } else {
+                // Handle different HTTP status codes
+                if (response.status === 429) {
+                    throw new Error('Too many requests. Please wait a moment and try again.');
+                } else if (response.status >= 500) {
+                    throw new Error('Server error. Please try again later.');
+                } else {
+                    throw new Error('Something went wrong. Please try again.');
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification(error.message || 'Sorry, there was an error sending your message. Please try again or contact us directly.', 'error');
+        })
+        .finally(() => {
+            // Reset button state
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        });
 });
+
+// Add form validation feedback
+document.getElementById('contact-form').addEventListener('input', function (e) {
+    const field = e.target;
+    const errorMessage = field.parentNode.querySelector('.error-message');
+
+    // Remove error styling on input
+    if (field.classList.contains('border-red-500')) {
+        field.classList.remove('border-red-500');
+        field.classList.add('border-gray-300');
+    }
+
+    // Remove error message if it exists
+    if (errorMessage) {
+        errorMessage.remove();
+    }
+});
+
+// Add form validation on blur
+document.getElementById('contact-form').addEventListener('blur', function (e) {
+    const field = e.target;
+
+    if (field.hasAttribute('required') && !field.value.trim()) {
+        showFieldError(field, 'This field is required');
+    } else if (field.type === 'email' && field.value && !isValidEmail(field.value)) {
+        showFieldError(field, 'Please enter a valid email address');
+    } else if (field.type === 'tel' && field.value && !isValidPhone(field.value)) {
+        showFieldError(field, 'Please enter a valid phone number');
+    }
+}, true);
+
+// Helper function to show field errors
+function showFieldError(field, message) {
+    // Remove existing error message
+    const existingError = field.parentNode.querySelector('.error-message');
+    if (existingError) {
+        existingError.remove();
+    }
+
+    // Add error styling
+    field.classList.remove('border-gray-300');
+    field.classList.add('border-red-500');
+
+    // Create and add error message
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message text-red-500 text-sm mt-1';
+    errorDiv.textContent = message;
+    field.parentNode.appendChild(errorDiv);
+}
+
+// Email validation helper
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Phone validation helper (basic South African format)
+function isValidPhone(phone) {
+    const phoneRegex = /^(\+27|0)[6-8][0-9]{8}$/;
+    return phoneRegex.test(phone.replace(/\s/g, ''));
+}
+
+// Notification system
+function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => notification.remove());
+
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification fixed top-20 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm transform transition-all duration-300 translate-x-full`;
+
+    // Set notification styles based on type
+    if (type === 'success') {
+        notification.className += ' bg-green-500 text-white';
+    } else if (type === 'error') {
+        notification.className += ' bg-red-500 text-white';
+    } else {
+        notification.className += ' bg-blue-500 text-white';
+    }
+
+    notification.innerHTML = `
+        <div class="flex items-center">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'} mr-3"></i>
+            <span>${message}</span>
+        </div>
+    `;
+
+    // Add to page
+    document.body.appendChild(notification);
+
+    // Animate in
+    setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+    }, 100);
+
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 5000);
+}
 
 // Add animation on scroll
 const observerOptions = {

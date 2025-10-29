@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://dp-energies.co.za/sitemap.xml

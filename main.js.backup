@@ -1,0 +1,614 @@
+// Enhanced JavaScript with error handling for DP ENERGIES
+(function() {
+    'use strict';
+
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeMobileMenu();
+        initializeNavigation(); 
+        initializeContactForm();
+        initializeScrollEffects();
+        initializeScrollToTop();
+    });
+
+    // Mobile menu toggle with error handling
+    function initializeMobileMenu() {
+        try {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    mobileMenu.classList.toggle('hidden');
+                });
+
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            }
+        } catch (error) {
+            console.warn('Mobile menu initialization failed:', error);
+        }
+    }
+
+    // Navigation and smooth scrolling
+    function initializeNavigation() {
+        try {
+            // Smooth scrolling for navigation links
+            function scrollToSection(sectionId) {
+                const element = document.getElementById(sectionId);
+                if (!element) return;
+                
+                const navHeight = window.innerWidth < 1024 ? 64 : 64;
+                const elementPosition = element.offsetTop - navHeight - 20;
+
+                window.scrollTo({
+                    top: elementPosition,
+                    behavior: 'smooth'
+                });
+            }
+
+            // Add click handlers to navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('href').substring(1);
+                    scrollToSection(sectionId);
+
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (mobileMenu) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+
+            // Update active navigation link on scroll
+            window.addEventListener('scroll', function() {
+                const sections = ['home', 'about', 'services', 'projects', 'contact'];
+                const navHeight = 64;
+
+                sections.forEach(sectionId => {
+                    const section = document.getElementById(sectionId);
+                    const navLink = document.querySelector(`a[href="#${sectionId}"]`);
+
+                    if (section && navLink) {
+                        const sectionTop = section.offsetTop - navHeight - 100;
+                        const sectionBottom = sectionTop + section.offsetHeight;
+
+                        if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                            document.querySelectorAll('.nav-link').forEach(link => {
+                                link.classList.remove('text-dp-orange');
+                                link.classList.add('text-dp-charcoal');
+                            });
+                            navLink.classList.remove('text-dp-charcoal');
+                            navLink.classList.add('text-dp-orange');
+                        }
+                    }
+                });
+            });
+
+            // Make scrollToSection available globally
+            window.scrollToSection = scrollToSection;
+        } catch (error) {
+            console.warn('Navigation initialization failed:', error);
+        }
+    }
+
+    // Contact form submission
+    function initializeContactForm() {
+        try {
+            const contactForm = document.getElementById('contact-form');
+            if (!contactForm) return;
+
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const submitBtn = this.querySelector('button[type="submit"]');
+                if (!submitBtn) return;
+
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+                submitBtn.disabled = true;
+
+                const formData = new FormData(this);
+
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        showNotification('Thank you for your message! We will contact you within 24 hours to discuss your gas and energy needs.', 'success');
+                        this.reset();
+                        
+                        // Reset any custom styling
+                        this.querySelectorAll('.border-red-500').forEach(field => {
+                            field.classList.remove('border-red-500');
+                            field.classList.add('border-gray-300');
+                        });
+                        this.querySelectorAll('.error-message').forEach(msg => msg.remove());
+                    } else {
+                        if (response.status === 429) {
+                            throw new Error('Too many requests. Please wait a moment and try again.');
+                        } else if (response.status >= 500) {
+                            throw new Error('Server error. Please try again later.');
+                        } else {
+                            throw new Error('Something went wrong. Please try again.');
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Form submission error:', error);
+                    showNotification(error.message || 'Sorry, there was an error sending your message. Please try again or contact us directly.', 'error');
+                })
+                .finally(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
+            });
+
+            // Form validation feedback
+            contactForm.addEventListener('input', function(e) {
+                const field = e.target;
+                const errorMessage = field.parentNode.querySelector('.error-message');
+
+                if (field.classList.contains('border-red-500')) {
+                    field.classList.remove('border-red-500');
+                    field.classList.add('border-gray-300');
+                }
+
+                if (errorMessage) {
+                    errorMessage.remove();
+                }
+            });
+
+            // Blur validation
+            contactForm.addEventListener('blur', function(e) {
+                const field = e.target;
+
+                if (field.hasAttribute('required') && !field.value.trim()) {
+                    showFieldError(field, 'This field is required');
+                } else if (field.type === 'email' && field.value && !isValidEmail(field.value)) {
+                    showFieldError(field, 'Please enter a valid email address');
+                } else if (field.type === 'tel' && field.value && !isValidPhone(field.value)) {
+                    showFieldError(field, 'Please enter a valid phone number');
+                }
+            }, true);
+        } catch (error) {
+            console.warn('Contact form initialization failed:', error);
+        }
+    }
+        } catch (error) {
+            console.warn('Contact form initialization failed:', error);
+        }
+    }
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function (e) {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+
+    if (!mobileMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
+        mobileMenu.classList.add('hidden');
+    }
+});
+
+// Smooth scrolling for navigation links with mobile optimization
+function scrollToSection(sectionId) {
+    const element = document.getElementById(sectionId);
+    const navHeight = window.innerWidth < 1024 ? 64 : 64; // Adjust for mobile
+    const elementPosition = element.offsetTop - navHeight - 20; // Add extra padding
+
+    window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+    });
+}
+
+// Add click handlers to navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const sectionId = this.getAttribute('href').substring(1);
+        scrollToSection(sectionId);
+
+        // Close mobile menu if open
+        document.getElementById('mobile-menu').classList.add('hidden');
+    });
+});
+
+// Update active navigation link on scroll
+window.addEventListener('scroll', function () {
+    const sections = ['home', 'about', 'services', 'projects', 'contact'];
+    const navHeight = 64;
+
+    sections.forEach(sectionId => {
+        const section = document.getElementById(sectionId);
+        const navLink = document.querySelector(`a[href="#${sectionId}"]`);
+
+        if (section && navLink) {
+            const sectionTop = section.offsetTop - navHeight - 100;
+            const sectionBottom = sectionTop + section.offsetHeight;
+
+            if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                // Remove active class from all nav links
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('text-dp-navy');
+                    link.classList.add('text-dp-charcoal');
+                });
+
+                // Add active class to current nav link
+                navLink.classList.remove('text-dp-charcoal');
+                navLink.classList.add('text-dp-navy');
+            }
+        }
+    });
+});
+
+// Contact form submission with Formspree
+document.addEventListener('DOMContentLoaded', function() {
+    try {
+        const contactForm = document.getElementById('contact-form');
+        if (!contactForm) return;
+        
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get the submit button and show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+    submitBtn.disabled = true;
+
+    // Get form data
+    const formData = new FormData(this);
+
+    // Send to Formspree
+    fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                // Success
+                showNotification('Thank you for your message! We will contact you within 24 hours to discuss your gas and energy needs.', 'success');
+
+                // Clear form fields
+                this.reset();
+
+                // Reset any custom styling or validation states
+                this.querySelectorAll('.border-red-500').forEach(field => {
+                    field.classList.remove('border-red-500');
+                    field.classList.add('border-gray-300');
+                });
+
+                // Remove any error messages
+                this.querySelectorAll('.error-message').forEach(msg => msg.remove());
+
+            } else {
+                // Handle different HTTP status codes
+                if (response.status === 429) {
+                    throw new Error('Too many requests. Please wait a moment and try again.');
+                } else if (response.status >= 500) {
+                    throw new Error('Server error. Please try again later.');
+                } else {
+                    throw new Error('Something went wrong. Please try again.');
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification(error.message || 'Sorry, there was an error sending your message. Please try again or contact us directly.', 'error');
+        })
+        .finally(() => {
+            // Reset button state
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        });
+
+        // Add form validation feedback
+        contactForm.addEventListener('input', function (e) {
+    const field = e.target;
+    const errorMessage = field.parentNode.querySelector('.error-message');
+
+    // Remove error styling on input
+    if (field.classList.contains('border-red-500')) {
+        field.classList.remove('border-red-500');
+        field.classList.add('border-gray-300');
+    }
+
+    // Remove error message if it exists
+    if (errorMessage) {
+        errorMessage.remove();
+    }
+        });
+
+        // Add form validation on blur
+        contactForm.addEventListener('blur', function (e) {
+    const field = e.target;
+
+    if (field.hasAttribute('required') && !field.value.trim()) {
+        showFieldError(field, 'This field is required');
+    } else if (field.type === 'email' && field.value && !isValidEmail(field.value)) {
+        showFieldError(field, 'Please enter a valid email address');
+    } else if (field.type === 'tel' && field.value && !isValidPhone(field.value)) {
+        showFieldError(field, 'Please enter a valid phone number');
+    }
+            }, true);
+        } catch (error) {
+            console.warn('Contact form initialization failed:', error);
+        }
+    }
+
+    // Helper functions
+    function showFieldError(field, message) {
+        try {
+            const existingError = field.parentNode.querySelector('.error-message');
+            if (existingError) {
+                existingError.remove();
+            }
+
+            field.classList.remove('border-gray-300');
+            field.classList.add('border-red-500');
+
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message text-red-500 text-sm mt-1';
+            errorDiv.textContent = message;
+            field.parentNode.appendChild(errorDiv);
+        } catch (error) {
+            console.warn('Error showing field error:', error);
+        }
+    }
+
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function isValidPhone(phone) {
+        const phoneRegex = /^(\+27|0)[6-8][0-9]{8}$/;
+        return phoneRegex.test(phone.replace(/\s/g, ''));
+    }
+
+    function showNotification(message, type = 'info') {
+        try {
+            document.querySelectorAll('.notification').forEach(notification => notification.remove());
+
+            const notification = document.createElement('div');
+            notification.className = `notification fixed top-20 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm transform transition-all duration-300 translate-x-full`;
+
+            if (type === 'success') {
+                notification.className += ' bg-green-500 text-white';
+            } else if (type === 'error') {
+                notification.className += ' bg-red-500 text-white';
+            } else {
+                notification.className += ' bg-blue-500 text-white';
+            }
+
+            const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas ${icon} mr-3"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 5000);
+        } catch (error) {
+            console.warn('Error showing notification:', error);
+            alert(message);
+        }
+    }
+
+    // Scroll effects
+    function initializeScrollEffects() {
+        try {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0px)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('section > div').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        } catch (error) {
+            console.warn('Scroll effects initialization failed:', error);
+        }
+    }
+
+    // Scroll to top functionality
+    function initializeScrollToTop() {
+        try {
+            const scrollToTopBtn = document.getElementById('scroll-to-top');
+            if (!scrollToTopBtn) return;
+
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.classList.remove('opacity-0', 'invisible');
+                    scrollToTopBtn.classList.add('opacity-100', 'visible');
+                } else {
+                    scrollToTopBtn.classList.add('opacity-0', 'invisible');
+                    scrollToTopBtn.classList.remove('opacity-100', 'visible');
+                }
+            });
+
+            scrollToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            scrollToTopBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                this.style.transform = 'scale(0.95)';
+            });
+
+            scrollToTopBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                this.style.transform = 'scale(1)';
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        } catch (error) {
+            console.warn('Scroll to top initialization failed:', error);
+        }
+    }
+
+})();
+
+// Email validation helper
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Phone validation helper (basic South African format)
+function isValidPhone(phone) {
+    const phoneRegex = /^(\+27|0)[6-8][0-9]{8}$/;
+    return phoneRegex.test(phone.replace(/\s/g, ''));
+}
+
+// Notification system
+function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => notification.remove());
+
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification fixed top-20 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm transform transition-all duration-300 translate-x-full`;
+
+    // Set notification styles based on type
+    if (type === 'success') {
+        notification.className += ' bg-green-500 text-white';
+    } else if (type === 'error') {
+        notification.className += ' bg-red-500 text-white';
+    } else {
+        notification.className += ' bg-blue-500 text-white';
+    }
+
+    notification.innerHTML = `
+        <div class="flex items-center">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'} mr-3"></i>
+            <span>${message}</span>
+        </div>
+    `;
+
+    // Add to page
+    document.body.appendChild(notification);
+
+    // Animate in
+    setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+    }, 100);
+
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 5000);
+}
+
+// Add animation on scroll
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Observe elements for animation
+document.querySelectorAll('section > div').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+});
+
+// Scroll to Top Button Functionality
+const scrollToTopBtn = document.getElementById('scroll-to-top');
+
+// Show/hide button based on scroll position
+window.addEventListener('scroll', function () {
+    if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.remove('opacity-0', 'invisible');
+        scrollToTopBtn.classList.add('opacity-100', 'visible');
+    } else {
+        scrollToTopBtn.classList.add('opacity-0', 'invisible');
+        scrollToTopBtn.classList.remove('opacity-100', 'visible');
+    }
+});
+
+// Smooth scroll to top when button is clicked
+scrollToTopBtn.addEventListener('click', function () {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// Add touch support for mobile devices
+scrollToTopBtn.addEventListener('touchstart', function (e) {
+    e.preventDefault();
+    this.style.transform = 'scale(0.95)';
+});
+
+scrollToTopBtn.addEventListener('touchend', function (e) {
+    e.preventDefault();
+    this.style.transform = 'scale(1)';
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+

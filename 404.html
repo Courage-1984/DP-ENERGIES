@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - DP ENERGIES</title>
+    <meta name="description"
+        content="The page you're looking for doesn't exist. Find what you need on DP ENERGIES - Professional Gas & Energy Solutions in Gauteng.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon_io/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon_io/favicon-32x32.png">
+
+    <!-- Critical CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #0C2D48 0%, #273043 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .content {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo img {
+            width: 48px;
+            height: 60px;
+            margin-right: 1rem;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            color: #FF6A13;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .error-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .error-message {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 640px) {
+            .buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-size: 1rem;
+            min-width: 180px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #FF6A13;
+            color: white;
+            border-color: #FF6A13;
+        }
+
+        .btn-primary:hover {
+            background: #e55a0f;
+            border-color: #e55a0f;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #0C2D48;
+            transform: translateY(-1px);
+        }
+
+        .quick-links {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .quick-links h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-link {
+            display: block;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+
+        .quick-link:hover {
+            background: rgba(255, 106, 19, 0.2);
+            transform: translateY(-2px);
+            color: #FFB347;
+        }
+
+        .contact-info {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-info h4 {
+            font-size: 1.125rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.875rem;
+        }
+
+        .contact-item .icon {
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .contact-item a {
+            color: #FF6A13;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            color: #FFB347;
+        }
+
+        /* Icon fallbacks */
+        .icon-phone::before {
+            content: "📞";
+        }
+
+        .icon-email::before {
+            content: "✉️";
+        }
+
+        .icon-clock::before {
+            content: "🕐";
+        }
+
+        .icon-location::before {
+            content: "📍";
+        }
+
+        /* Animation for error code */
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .error-code {
+            animation: bounce 2s infinite;
+        }
+
+        /* Search box */
+        .search-box {
+            margin: 1.5rem 0;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.75rem 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #FF6A13;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .error-code {
+                font-size: 6rem;
+            }
+
+            .error-title {
+                font-size: 2rem;
+            }
+
+            .logo-text {
+                font-size: 1.5rem;
+            }
+
+            .logo img {
+                width: 40px;
+                height: 50px;
+            }
+
+            .content {
+                padding: 1rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <!-- Logo -->
+            <div class="logo">
+                <img src="assets/images/favicon_io/logo_primary.png" alt="DP ENERGIES Logo"
+                    onerror="this.style.display='none'">
+                <div class="logo-text">DP ENERGIES</div>
+            </div>
+
+            <!-- Error Display -->
+            <div class="error-code">404</div>
+            <h1 class="error-title">Page Not Found</h1>
+            <p class="error-message">
+                Sorry, the page you're looking for doesn't exist or has been moved.
+                But don't worry - we're still here to help with all your gas and energy needs!
+            </p>
+
+            <!-- Search Box -->
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search for services, COC, installations..."
+                    id="searchInput">
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="buttons">
+                <a href="/" class="btn btn-primary">Go Home</a>
+                <a href="tel:+27610397034" class="btn btn-secondary">Call Us Now</a>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="quick-links">
+                <h3>Quick Links</h3>
+                <div class="links-grid">
+                    <a href="/#services" class="quick-link">Our Services</a>
+                    <a href="/#about" class="quick-link">About Us</a>
+                    <a href="/#contact" class="quick-link">Contact</a>
+                    <a href="/#projects" class="quick-link">Projects</a>
+                    <a href="https://wa.me/27610397034" class="quick-link">WhatsApp</a>
+                    <a href="mailto:info@dp-energies.co.za" class="quick-link">Email Us</a>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <h4>Need Immediate Help?</h4>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <span class="icon icon-phone"></span>
+                        <span>Emergency: <a href="tel:+27610397034">+27 61 039 7034</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon icon-email"></span>
+                        <span>Email: <a href="mailto:info@dp-energies.co.za">info@dp-energies.co.za</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon icon-clock"></span>
+                        <span>24/7 Emergency Service</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon icon-location"></span>
+                        <span>Serving Gauteng & Surrounds</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for search functionality -->
+    <script>
+        (function () {
+            'use strict';
+
+            // Simple search functionality
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        const query = this.value.trim().toLowerCase();
+                        if (query) {
+                            // Redirect based on common search terms
+                            if (query.includes('service') || query.includes('installation') || query.includes('gas')) {
+                                window.location.href = '/#services';
+                            } else if (query.includes('contact') || query.includes('phone') || query.includes('call')) {
+                                window.location.href = '/#contact';
+                            } else if (query.includes('about') || query.includes('company')) {
+                                window.location.href = '/#about';
+                            } else if (query.includes('project') || query.includes('work')) {
+                                window.location.href = '/#projects';
+                            } else if (query.includes('coc') || query.includes('certificate') || query.includes('compliance')) {
+                                window.location.href = '/#services';
+                            } else {
+                                // Default to home page with hash for search
+                                window.location.href = '/#' + encodeURIComponent(query);
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Track 404 events for analytics (if available)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'page_not_found', {
+                    'page_location': window.location.href,
+                    'page_referrer': document.referrer
+                });
+            }
+
+            // Auto-redirect after 30 seconds if no interaction
+            let redirectTimer = setTimeout(function () {
+                if (confirm('Would you like to go to our homepage?')) {
+                    window.location.href = '/';
+                }
+            }, 30000);
+
+            // Cancel auto-redirect if user interacts with page
+            document.addEventListener('click', function () {
+                clearTimeout(redirectTimer);
+            });
+
+            document.addEventListener('keydown', function () {
+                clearTimeout(redirectTimer);
+            });
+
+        })();
+    </script>
+
+    <!-- Structured Data for 404 page -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Page Not Found - DP ENERGIES",
+        "description": "The requested page was not found. DP ENERGIES provides professional gas and energy solutions in Gauteng.",
+        "url": "https://dp-energies.co.za/404.html",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "DP ENERGIES",
+            "url": "https://dp-energies.co.za"
+        },
+        "mainEntity": {
+            "@type": "Organization",
+            "name": "DP ENERGIES",
+            "telephone": "+27 61 039 7034",
+            "email": "info@dp-energies.co.za",
+            "url": "https://dp-energies.co.za"
+        }
+    }
+    </script>
+</body>
+
+</html>

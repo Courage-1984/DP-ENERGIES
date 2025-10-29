@@ -1,3 +1,23 @@
+/* Font fallbacks */
+body {
+    font-family: Inter, Arial, sans-serif;
+}
+
+.font-display {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Ensure icons work even if Font Awesome fails */
+.fas,
+.fab,
+.far {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+
 /* Mobile-specific improvements */
 @media (max-width: 640px) {
 
@@ -136,3 +156,8 @@ a:focus {
         height: 3rem;
     }
 }
+
+#scroll-progress {
+    position: absolute;
+}
+

@@ -1,0 +1,12 @@
+{
+  "name": "dp-energies",
+  "version": "1.0.0",
+  "description": "DP ENERGIES website",
+  "main": "index.html",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  }
+}
